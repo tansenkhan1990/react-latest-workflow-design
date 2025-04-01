@@ -4,13 +4,13 @@ import { logout } from "../store/authSlice";
 import { RootState } from "../store/store";
 
 const Navbar: React.FC = () => {
-  const { token } = useSelector((state: RootState) => state.auth);
+  const { accessToken } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   return (
     <nav>
       <Link to="/">Home</Link>
-      {token ? (
+      {accessToken ? (
         <>
           <Link to="/dashboard">Dashboard</Link>
           <button onClick={() => dispatch(logout())}>Logout</button>

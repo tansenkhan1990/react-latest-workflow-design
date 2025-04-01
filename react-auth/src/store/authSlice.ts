@@ -3,13 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   user: { username: string } | null;
-  token: string | null;
+  accessToken: string | null;
 }
 
 // Initial state
 const initialState: AuthState = {
   user: JSON.parse(localStorage.getItem("user") || "null"),
-  token: localStorage.getItem("token"),
+  accessToken: localStorage.getItem("accessToken"),
 };
 
 // Create auth slice
@@ -17,17 +17,17 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    loginSuccess: (state, action: PayloadAction<{ user: { username: string }; token: string }>) => {
+    loginSuccess: (state, action: PayloadAction<{ user: { username: string }; accessToken: string }>) => {
       state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.accessToken = action.payload.accessToken;
       localStorage.setItem("user", JSON.stringify(action.payload.user));
-      localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("accessToken", action.payload.accessToken);
     },
     logout: (state) => {
       state.user = null;
-      state.token = null;
+      state.accessToken = null;
       localStorage.removeItem("user");
-      localStorage.removeItem("token");
+      localStorage.removeItem("accessToken");
     },
   },
 });

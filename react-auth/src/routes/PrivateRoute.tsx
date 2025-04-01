@@ -8,8 +8,8 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const { token } = useSelector((state: RootState) => state.auth);
-  return token ? children : <Navigate to="/login" />;
+  const { accessToken } = useSelector((state: RootState) => state.auth);
+  return accessToken ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

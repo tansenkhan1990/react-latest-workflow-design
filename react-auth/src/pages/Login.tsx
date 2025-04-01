@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login: React.FC = () => {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -13,18 +16,21 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-       // username and password is given below
-        // {
-        //     "username": "emilys",
-        //     "password": "emilyspass"
-        //   }
+      // username and password is given below
+      // {
+      //     "username": "emilys",
+      //     "password": "emilyspass"
+      //   }
       const response = await axios.post("https://dummyjson.com/auth/login", {
         username: credentials.username,
         password: credentials.password,
       });
 
-      const { token } = response.data;
-      dispatch(loginSuccess({ user: { username: credentials.username }, token }));
+      const { accessToken } = response.data;
+    //   const token = accessToken;
+      dispatch(
+        loginSuccess({ user: { username: credentials.username }, accessToken })
+      );
       navigate("/dashboard");
     } catch (error) {
       alert("Invalid credentials!");
@@ -39,13 +45,17 @@ const Login: React.FC = () => {
           type="text"
           placeholder="Username"
           value={credentials.username}
-          onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+          onChange={(e) =>
+            setCredentials({ ...credentials, username: e.target.value })
+          }
         />
         <input
           type="password"
           placeholder="Password"
           value={credentials.password}
-          onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+          onChange={(e) =>
+            setCredentials({ ...credentials, password: e.target.value })
+          }
         />
         <button type="submit">Login</button>
       </form>
